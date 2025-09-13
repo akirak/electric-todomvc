@@ -1,0 +1,14 @@
+pre-commit:
+  runner: bash
+  commands:
+    lint-staged:
+      run: pnpm run lint-staged
+pre-push:
+  runner: bash
+  commands:
+    check-types:
+      run: pnpm run check-types
+    lint:
+      run: pnpm run lint-fix
+    pnpm-lock:
+      run: pnpm install --frozen-lockfile

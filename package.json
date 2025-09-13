@@ -1,0 +1,74 @@
+{
+  "name": "electric-todomvc",
+  "type": "module",
+  "private": true,
+  "sideEffects": false,
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build && tsc --noEmit",
+    "lint": "eslint .",
+    "lint-fix": "eslint --fix .",
+    "lint-staged": "lint-staged",
+    "check-types": "tsc --noEmit",
+    "dbmate:new": "dbmate new",
+    "dbmate:up": "dbmate up",
+    "start": "node .output/server/index.mjs",
+    "prepare": "lefthook install"
+  },
+  "dependencies": {
+    "@electric-sql/client": "^1.0.10",
+    "@mantine/core": "^8.3.1",
+    "@mantine/hooks": "^8.3.1",
+    "@orpc/client": "^1.8.8",
+    "@orpc/contract": "^1.8.8",
+    "@orpc/openapi": "^1.8.8",
+    "@orpc/openapi-client": "^1.8.8",
+    "@orpc/server": "^1.8.8",
+    "@tanstack/electric-db-collection": "^0.1.19",
+    "@tanstack/query-core": "^5.87.4",
+    "@tanstack/react-db": "^0.1.17",
+    "@tanstack/react-router": "^1.131.41",
+    "@tanstack/react-router-devtools": "^1.131.42",
+    "@tanstack/react-start": "^1.131.43",
+    "arktype": "^2.1.22",
+    "kysely": "^0.28.6",
+    "pg": "^8.16.3",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^5.3.0",
+    "@eslint-react/eslint-plugin": "^1.53.1",
+    "@tanstack/eslint-plugin-router": "^1.131.2",
+    "@types/node": "^22.18.3",
+    "@types/pg": "^8.15.5",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^4.7.0",
+    "autoprefixer": "^10.4.21",
+    "dbmate": "^2.28.0",
+    "eslint": "^9.35.0",
+    "eslint-plugin-format": "^1.0.1",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "lefthook": "^1.13.0",
+    "lint-staged": "^16.1.6",
+    "postcss": "^8.5.6",
+    "postcss-preset-mantine": "^1.18.0",
+    "postcss-simple-vars": "^7.0.1",
+    "typescript": "^5.9.2",
+    "vite": "^6.3.6",
+    "vite-tsconfig-paths": "^5.1.4"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "pg"
+    ],
+    "patchedDependencies": {}
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,json,yaml}": [
+      "eslint --fix"
+    ]
+  }
+}
