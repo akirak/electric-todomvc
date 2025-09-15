@@ -13,7 +13,6 @@ import { createServerRootRoute } from '@tanstack/react-start/server'
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { ServerRoute as ApiTodosServerRouteImport } from './routes/api/todos'
-import { ServerRoute as ApiRpcSplatServerRouteImport } from './routes/api/rpc/$'
 
 const rootServerRouteImport = createServerRootRoute()
 
@@ -25,11 +24,6 @@ const IndexRoute = IndexRouteImport.update({
 const ApiTodosServerRoute = ApiTodosServerRouteImport.update({
   id: '/api/todos',
   path: '/api/todos',
-  getParentRoute: () => rootServerRouteImport,
-} as any)
-const ApiRpcSplatServerRoute = ApiRpcSplatServerRouteImport.update({
-  id: '/api/rpc/$',
-  path: '/api/rpc/$',
   getParentRoute: () => rootServerRouteImport,
 } as any)
 
@@ -56,28 +50,24 @@ export interface RootRouteChildren {
 }
 export interface FileServerRoutesByFullPath {
   '/api/todos': typeof ApiTodosServerRoute
-  '/api/rpc/$': typeof ApiRpcSplatServerRoute
 }
 export interface FileServerRoutesByTo {
   '/api/todos': typeof ApiTodosServerRoute
-  '/api/rpc/$': typeof ApiRpcSplatServerRoute
 }
 export interface FileServerRoutesById {
   __root__: typeof rootServerRouteImport
   '/api/todos': typeof ApiTodosServerRoute
-  '/api/rpc/$': typeof ApiRpcSplatServerRoute
 }
 export interface FileServerRouteTypes {
   fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths: '/api/todos' | '/api/rpc/$'
+  fullPaths: '/api/todos'
   fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/todos' | '/api/rpc/$'
-  id: '__root__' | '/api/todos' | '/api/rpc/$'
+  to: '/api/todos'
+  id: '__root__' | '/api/todos'
   fileServerRoutesById: FileServerRoutesById
 }
 export interface RootServerRouteChildren {
   ApiTodosServerRoute: typeof ApiTodosServerRoute
-  ApiRpcSplatServerRoute: typeof ApiRpcSplatServerRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -100,13 +90,6 @@ declare module '@tanstack/react-start/server' {
       preLoaderRoute: typeof ApiTodosServerRouteImport
       parentRoute: typeof rootServerRouteImport
     }
-    '/api/rpc/$': {
-      id: '/api/rpc/$'
-      path: '/api/rpc/$'
-      fullPath: '/api/rpc/$'
-      preLoaderRoute: typeof ApiRpcSplatServerRouteImport
-      parentRoute: typeof rootServerRouteImport
-    }
   }
 }
 
@@ -118,7 +101,6 @@ export const routeTree = rootRouteImport
   ._addFileTypes<FileRouteTypes>()
 const rootServerRouteChildren: RootServerRouteChildren = {
   ApiTodosServerRoute: ApiTodosServerRoute,
-  ApiRpcSplatServerRoute: ApiRpcSplatServerRoute,
 }
 export const serverRouteTree = rootServerRouteImport
   ._addFileChildren(rootServerRouteChildren)

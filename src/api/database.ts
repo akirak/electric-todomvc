@@ -1,5 +1,5 @@
-import { VITE_DATABASE_URL } from "@/config"
-import type { TodoTable } from "../contract"
+import type { TodoTable } from "@/domain/contract"
+import process from "node:process"
 import {
   Kysely,
   PostgresDialect,
@@ -12,7 +12,7 @@ interface Database {
 
 const dialect = new PostgresDialect({
   pool: new Pool({
-    connectionString: VITE_DATABASE_URL,
+    connectionString: process.env.DATABASE_URL,
     max: 10,
   }),
 })

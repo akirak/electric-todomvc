@@ -1,6 +1,6 @@
 import { implement } from "@orpc/server"
 import { sql } from "kysely"
-import { contract } from "../contract"
+import { contract } from "@/domain/contract"
 import { db } from "./database"
 
 const os = implement(contract)

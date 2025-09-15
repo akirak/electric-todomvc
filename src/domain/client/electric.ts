@@ -1,8 +1,8 @@
 import { electricCollectionOptions } from "@tanstack/electric-db-collection"
 import { createCollection } from "@tanstack/react-db"
+import { VITE_APP_URL } from "@/config"
 import { todoSchema } from "../contract"
 import { client } from "./orpc"
-import { VITE_APP_URL } from "@/config"
 
 export const todosCollection = createCollection(
   electricCollectionOptions({

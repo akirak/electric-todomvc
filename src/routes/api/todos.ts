@@ -1,6 +1,6 @@
-import { VITE_ELECTRIC_URL } from "@/config"
 import { ELECTRIC_PROTOCOL_QUERY_PARAMS } from "@electric-sql/client"
 import { createServerFileRoute } from "@tanstack/react-start/server"
+import { VITE_ELECTRIC_URL } from "@/config"
 
 async function serve({ request }: { request: Request }) {
   // ...check user authorization
