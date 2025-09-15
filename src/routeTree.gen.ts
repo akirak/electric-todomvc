@@ -13,6 +13,8 @@ import { createServerRootRoute } from '@tanstack/react-start/server'
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { ServerRoute as ApiTodosServerRouteImport } from './routes/api/todos'
+import { ServerRoute as ApiTodosUpdateServerRouteImport } from './routes/api/todos.update'
+import { ServerRoute as ApiTodosCreateServerRouteImport } from './routes/api/todos.create'
 
 const rootServerRouteImport = createServerRootRoute()
 
@@ -25,6 +27,16 @@ const ApiTodosServerRoute = ApiTodosServerRouteImport.update({
   id: '/api/todos',
   path: '/api/todos',
   getParentRoute: () => rootServerRouteImport,
+} as any)
+const ApiTodosUpdateServerRoute = ApiTodosUpdateServerRouteImport.update({
+  id: '/update',
+  path: '/update',
+  getParentRoute: () => ApiTodosServerRoute,
+} as any)
+const ApiTodosCreateServerRoute = ApiTodosCreateServerRouteImport.update({
+  id: '/create',
+  path: '/create',
+  getParentRoute: () => ApiTodosServerRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -49,25 +61,31 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
 }
 export interface FileServerRoutesByFullPath {
-  '/api/todos': typeof ApiTodosServerRoute
+  '/api/todos': typeof ApiTodosServerRouteWithChildren
+  '/api/todos/create': typeof ApiTodosCreateServerRoute
+  '/api/todos/update': typeof ApiTodosUpdateServerRoute
 }
 export interface FileServerRoutesByTo {
-  '/api/todos': typeof ApiTodosServerRoute
+  '/api/todos': typeof ApiTodosServerRouteWithChildren
+  '/api/todos/create': typeof ApiTodosCreateServerRoute
+  '/api/todos/update': typeof ApiTodosUpdateServerRoute
 }
 export interface FileServerRoutesById {
   __root__: typeof rootServerRouteImport
-  '/api/todos': typeof ApiTodosServerRoute
+  '/api/todos': typeof ApiTodosServerRouteWithChildren
+  '/api/todos/create': typeof ApiTodosCreateServerRoute
+  '/api/todos/update': typeof ApiTodosUpdateServerRoute
 }
 export interface FileServerRouteTypes {
   fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths: '/api/todos'
+  fullPaths: '/api/todos' | '/api/todos/create' | '/api/todos/update'
   fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/todos'
-  id: '__root__' | '/api/todos'
+  to: '/api/todos' | '/api/todos/create' | '/api/todos/update'
+  id: '__root__' | '/api/todos' | '/api/todos/create' | '/api/todos/update'
   fileServerRoutesById: FileServerRoutesById
 }
 export interface RootServerRouteChildren {
-  ApiTodosServerRoute: typeof ApiTodosServerRoute
+  ApiTodosServerRoute: typeof ApiTodosServerRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -90,8 +108,36 @@ declare module '@tanstack/react-start/server' {
       preLoaderRoute: typeof ApiTodosServerRouteImport
       parentRoute: typeof rootServerRouteImport
     }
+    '/api/todos/update': {
+      id: '/api/todos/update'
+      path: '/update'
+      fullPath: '/api/todos/update'
+      preLoaderRoute: typeof ApiTodosUpdateServerRouteImport
+      parentRoute: typeof ApiTodosServerRoute
+    }
+    '/api/todos/create': {
+      id: '/api/todos/create'
+      path: '/create'
+      fullPath: '/api/todos/create'
+      preLoaderRoute: typeof ApiTodosCreateServerRouteImport
+      parentRoute: typeof ApiTodosServerRoute
+    }
   }
 }
+
+interface ApiTodosServerRouteChildren {
+  ApiTodosCreateServerRoute: typeof ApiTodosCreateServerRoute
+  ApiTodosUpdateServerRoute: typeof ApiTodosUpdateServerRoute
+}
+
+const ApiTodosServerRouteChildren: ApiTodosServerRouteChildren = {
+  ApiTodosCreateServerRoute: ApiTodosCreateServerRoute,
+  ApiTodosUpdateServerRoute: ApiTodosUpdateServerRoute,
+}
+
+const ApiTodosServerRouteWithChildren = ApiTodosServerRoute._addFileChildren(
+  ApiTodosServerRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -100,7 +146,7 @@ export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
 const rootServerRouteChildren: RootServerRouteChildren = {
-  ApiTodosServerRoute: ApiTodosServerRoute,
+  ApiTodosServerRoute: ApiTodosServerRouteWithChildren,
 }
 export const serverRouteTree = rootServerRouteImport
   ._addFileChildren(rootServerRouteChildren)
