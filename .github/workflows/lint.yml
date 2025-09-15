@@ -1,0 +1,44 @@
+name: Lint
+
+on:
+  pull_request:
+    paths-ignore:
+      - "README.*"
+
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - "README.*"
+
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+
+      - name: Set up Nix
+        uses: ./.github/actions/setup
+
+      - name: Install npm dependencies
+        shell: bash
+        run: nix develop -L -c pnpm install
+
+      - name: Lint
+        shell: bash
+        run: nix develop -L -c pnpm run lint
+
+      - name: Check types
+        shell: bash
+        run: nix develop -L -c pnpm run check-types
