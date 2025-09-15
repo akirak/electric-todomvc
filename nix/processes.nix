@@ -54,7 +54,7 @@ in
 
         settings.processes.electric = {
           command = ''
-            podman run --replace --rm --network host \
+            docker run --replace --rm --network host \
               --name ${databaseName} \
               --env ELECTRIC_PORT=${builtins.toString electricPort} \
               --env ELECTRIC_INSECURE=true \
