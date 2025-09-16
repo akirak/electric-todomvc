@@ -82,7 +82,7 @@ DATABASE_URL=postgresql://postgres:postgres@localhost:5437/todomvc?sslmode=disab
 3. Start infrastructure (Postgres + Electric)
 
 ```bash
-nix run .#services -- up
+nix run .#services
 ```
 
 Leave this running in one terminal.
