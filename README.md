@@ -4,9 +4,10 @@ This is a todo MVC application with [TanStack
 Start](https://tanstack.com/start/latest), [Electric
 SQL](https://electric-sql.com/) (on PostgreSQL), and [TanStack
 DB](https://tanstack.com/db/latest). It is a local-first application with
-real-time synchronization, with data persisted to a remote PostgreSQL server.
+real-time synchronization, with the data persisted to a remote PostgreSQL
+server.
 
-While the functionality is totally useless, this repository is intended as my
+While the functionality is totally useless, this repository is intended as a
 template for building applications supporting sync, so it is built with an
 opinionated up-to-date stack.
 
@@ -52,7 +53,7 @@ Here is a screenshot:
 
 ## Quick start with Nix
 
-This repository contains a `flake.nix` for quickly starting a demo.
+This repository contains a `flake.nix` for quickly starting a local environment.
 You will require the following dependencies:
 
 - Nix (with flakes enabled)
